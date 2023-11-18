@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'constants.dart';
+
 void main() => runApp(const MyApp());
 
 class MyApp extends StatelessWidget {
@@ -16,39 +18,12 @@ class MyApp extends StatelessWidget {
         child: Scaffold(
           appBar: AppBar(
             centerTitle: true,
-            shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(100)),
-            title: const AppTitle(),
+            title: const Text(
+              "BMI",
+              style: TextStyle(fontSize: 38),
+            ),
           ),
           body: const AppBody(),
-        ),
-      ),
-      debugShowCheckedModeBanner: false,
-    );
-  }
-}
-
-class AppTitle extends StatefulWidget {
-  const AppTitle({super.key});
-
-  @override
-  State<AppTitle> createState() => _AppTitleState();
-}
-
-class _AppTitleState extends State<AppTitle> {
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: MediaQuery.of(context).size.width * 0.7,
-      height: 60,
-      decoration: BoxDecoration(
-          color: Colors.white12,
-          border: Border.all(width: 0),
-          borderRadius: BorderRadius.circular(20)),
-      child: const Center(
-        child: Text(
-          "BMI Calculator",
-          style: TextStyle(color: Colors.white),
         ),
       ),
     );
@@ -63,22 +38,9 @@ class AppBody extends StatefulWidget {
 }
 
 class _AppBodyState extends State<AppBody> {
-  Color selectedColor = Colors.white12;
-  Color selectedColor2 = Colors.white12;
-  int weight = 50;
-  int age = 10;
-
-  Yes() {
+  changeData(int data, int change) {
     setState(() {
-      selectedColor = Colors.white10;
-      selectedColor2 = Colors.white12;
-    });
-  }
-
-  No() {
-    setState(() {
-      selectedColor = Colors.white12;
-      selectedColor2 = Colors.white10;
+      data = data + change;
     });
   }
 
@@ -86,13 +48,16 @@ class _AppBodyState extends State<AppBody> {
       {required IconData icon,
       required String text,
       required Color color,
-      required VoidCallback fun}) {
+      required bool selectMale}) {
     return GestureDetector(
       onTap: () {
-        fun();
+        setState(() {
+          maleSelected = selectMale;
+          changeGenderCardColor();
+        });
       },
       child: Container(
-        margin: const EdgeInsets.only(top: 40, left: 20, right: 10),
+        width: MediaQuery.of(context).size.width * 0.43,
         decoration: BoxDecoration(
           color: color,
           border: Border.all(width: 0),
@@ -115,124 +80,158 @@ class _AppBodyState extends State<AppBody> {
     );
   }
 
-  Widget _createValuedCard({required String text, required Function fun}) {
-    return GestureDetector(
-      onTap: () {
-        fun();
+  Widget _createButton({required IconData icon, required VoidCallback fun}) {
+    return IconButton(
+      splashColor: Colors.red,
+      onPressed: () {
+        setState(() {
+          fun();
+        });
       },
-      child: Container(
-        margin: const EdgeInsets.only(top: 20, left: 20, right: 10),
-        padding: const EdgeInsets.only(top: 10),
-        decoration: BoxDecoration(
-          color: Colors.white10,
-          border: Border.all(width: 0),
-          borderRadius: BorderRadius.circular(20),
-        ),
-        child: Column(
-          children: [
-            Text(
-              text,
-              style: const TextStyle(fontSize: 20),
-            ),
-            Text(
-              weight.toString(),
-              style: const TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
-            ),
-            const Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                IconButton(
-                  onPressed: null,
-                  iconSize: 20,
-                  style: ButtonStyle(
-                      minimumSize: MaterialStatePropertyAll(Size(20, 20)),
-                      backgroundColor:
-                          MaterialStatePropertyAll(Colors.white24)),
-                  icon: Icon(Icons.add),
-                ),
-                IconButton(
-                  onPressed: null,
-                  iconSize: 20,
-                  style: ButtonStyle(
-                      minimumSize: MaterialStatePropertyAll(Size(20, 20)),
-                      backgroundColor:
-                          MaterialStatePropertyAll(Colors.white24)),
-                  icon: Icon(Icons.minimize),
-                ),
-              ],
-            )
-          ],
-        ),
+      iconSize: 20,
+      style: buttonStyle,
+      icon: Icon(icon),
+    );
+  }
+
+  Widget _createValuedCard(
+      {required String text,
+      required int value,
+      required VoidCallback addFun,
+      required VoidCallback subFun}) {
+    return Container(
+      width: MediaQuery.of(context).size.width * 0.43,
+      decoration: decorateBox(color: Colors.white12, radius: 20),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(
+            text,
+            style: const TextStyle(fontSize: 20),
+          ),
+          Text(
+            value.toString(),
+            style: const TextStyle(fontSize: 38, fontWeight: FontWeight.bold),
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              _createButton(icon: Icons.add, fun: addFun),
+              _createButton(icon: Icons.remove, fun: subFun),
+            ],
+          )
+        ],
       ),
     );
   }
 
+  Widget insertTopPadding(double num) {
+    return SizedBox(height: num);
+  }
+
+  // TODO: Modularize Into Screen
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.spaceAround,
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        Expanded(
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Expanded(
-                child: _createGenderCards(
+    return Padding(
+      padding: EdgeInsets.symmetric(
+          horizontal: MediaQuery.of(context).size.width * .05),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          insertTopPadding(MediaQuery.of(context).size.height * 0.05),
+          SizedBox(
+            height: MediaQuery.of(context).size.height * 0.2,
+            width: MediaQuery.of(context).size.width * 0.9,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                _createGenderCards(
                     icon: Icons.male,
                     text: 'Male',
-                    color: selectedColor,
-                    fun: Yes),
-              ),
-              Expanded(
-                child: _createGenderCards(
+                    color: maleCardColor,
+                    selectMale: true),
+                _createGenderCards(
                     icon: Icons.female,
                     text: 'Female',
-                    color: selectedColor2,
-                    fun: No),
-              ),
-            ],
-          ),
-        ),
-        Expanded(
-          child: Container(
-            margin: const EdgeInsets.only(top: 20, left: 20, right: 20),
-            decoration: BoxDecoration(
-              color: Colors.white10,
-              border: Border.all(width: 0),
-              borderRadius: BorderRadius.circular(20),
+                    color: femaleCardColor,
+                    selectMale: false),
+              ],
             ),
-            child: const Text(''),
           ),
-        ),
-        Expanded(
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Expanded(
-                child: _createValuedCard(text: 'Weight', fun: () {}),
-              ),
-              Expanded(
-                child: _createValuedCard(text: 'Age', fun: () {}),
-              ),
-            ],
-          ),
-        ),
-        Expanded(
-          child: Container(
-            margin: const EdgeInsets.symmetric(
-              vertical: 10,
-              horizontal: 20,
+          insertTopPadding(MediaQuery.of(context).size.height * 0.03),
+          Container(
+            width: MediaQuery.of(context).size.width * 0.9,
+            height: MediaQuery.of(context).size.height * 0.15,
+            decoration: decorateBox(color: Colors.white12, radius: 10),
+            child: const Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  "Height",
+                  style: TextStyle(fontSize: 20),
+                ),
+                // TODO: Implement A Slider
+                // Slider(value: 10, onChanged: null),
+              ],
             ),
-            decoration: BoxDecoration(
-              color: Colors.white10,
-              border: Border.all(width: 0),
-              borderRadius: BorderRadius.circular(20),
-            ),
-            child: const Text(''),
           ),
-        ),
-      ],
+          insertTopPadding(MediaQuery.of(context).size.height * 0.03),
+          SizedBox(
+            width: MediaQuery.of(context).size.width * 0.9,
+            height: MediaQuery.of(context).size.height * 0.20,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                _createValuedCard(
+                  text: 'Weight',
+                  value: weight,
+                  addFun: () {
+                    (weight < 140) ? ++weight : weight;
+                  },
+                  subFun: () {
+                    (weight > 1) ? --weight : weight;
+                  },
+                ),
+                _createValuedCard(
+                  text: 'Age',
+                  value: age,
+                  addFun: () {
+                    (age < 140) ? ++age : age;
+                  },
+                  subFun: () {
+                    (age > 1) ? --age : age;
+                  },
+                ),
+              ],
+            ),
+          ),
+          insertTopPadding(MediaQuery.of(context).size.height * 0.03),
+          GestureDetector(
+            onTap: () {
+              // TODO: Implement Method to calculate the BMI
+              print("object");
+            },
+            child: Container(
+              width: MediaQuery.of(context).size.width * 0.9,
+              height: MediaQuery.of(context).size.height * 0.1,
+              decoration: decorateBox(
+                  color: const Color.fromRGBO(255, 0, 0, 100), radius: 10),
+              child: const Center(
+                child: Text(
+                  "Calculate",
+                  style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+                ),
+              ),
+            ),
+          ),
+          insertTopPadding(20),
+          const ElevatedButton(
+            // TODO: Implement A Button To Change Theme Of App
+            onPressed: null,
+            child: Text("Hello"),
+          ),
+        ],
+      ),
     );
   }
 }
