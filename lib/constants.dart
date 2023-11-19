@@ -1,31 +1,13 @@
-import 'package:flutter/material.dart';
+Map<String, String> msg = {
+  'Underweight': 'You should eat better to gain weight.',
+  'Normal weight': 'Keep up your routine.',
+  'Overweight': 'You should exercise.',
+  'Obesity Class I': 'You should diet and exercise.',
+  'Obesity Class II': 'You should diet and do extreme exercise.',
+  'Obesity Class III':
+      'Change your life style. Follow strict diet and exercise daily.'
+};
 
-int weight = 50;
-int age = 10;
-
-Color maleCardColor = Colors.white38;
-Color femaleCardColor = Colors.white12;
-bool maleSelected = true;
-
-changeGenderCardColor() {
-  if (maleSelected) {
-    maleCardColor = Colors.white38;
-    femaleCardColor = Colors.white10;
-  } else {
-    maleCardColor = Colors.white10;
-    femaleCardColor = Colors.white38;
-  }
-}
-
-decorateBox({required Color color, required double radius}) {
-  return BoxDecoration(
-    color: color,
-    border: Border.all(width: 0),
-    borderRadius: BorderRadius.circular(radius),
-  );
-}
-
-ButtonStyle buttonStyle = const ButtonStyle(
-  minimumSize: MaterialStatePropertyAll(Size(20, 20)),
-  backgroundColor: MaterialStatePropertyAll(Colors.white24),
-);
+double weight = 55;
+int age = 18;
+double height = 150;
