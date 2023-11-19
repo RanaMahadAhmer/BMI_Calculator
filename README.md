@@ -1,16 +1,24 @@
-# bmi
+# Bmi CAlculator
 
-A new Flutter project.
+A  Flutter project for calculating BMI (Body Mass Index Ratio).
 
-## Getting Started
+## Dscription
 
-This project is a starting point for a Flutter application.
+This App provides a streamline and modern UI and UX for calculating BMI.
 
-A few resources to get you started if this is your first Flutter project:
+## Formula
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+The App uses formula set by WHO (World Health Organziation):
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+- [weight_in_kgs / (height_int_meters * height_int_meters)](https://www.who.int/europe/news-room/fact-sheets/item/a-healthy-lifestyle---who-recommendations#:~:text=BMI%2C%20formerly%20called%20the%20Quetelet,have%20a%20BMI%20of%2022.9.)
+
+## Classification
+
+The App classfies BMI according to standards set by WHO as: 
+
+- [Below 18.5    : Underweight](https://www.who.int/europe/news-room/fact-sheets/item/a-healthy-lifestyle---who-recommendations#:~:text=BMI%2C%20formerly%20called%20the%20Quetelet,have%20a%20BMI%20of%2022.9.)
+- [B/W 18.5–24.9 : Normal weight](https://www.who.int/europe/news-room/fact-sheets/item/a-healthy-lifestyle---who-recommendations#:~:text=BMI%2C%20formerly%20called%20the%20Quetelet,have%20a%20BMI%20of%2022.9.)
+- [B/W 25.0–29.9 : Overweight (Pre-obesity)](https://www.who.int/europe/news-room/fact-sheets/item/a-healthy-lifestyle---who-recommendations#:~:text=BMI%2C%20formerly%20called%20the%20Quetelet,have%20a%20BMI%20of%2022.9.)
+- [B/W 30.0–34.9 : Obesity class I](https://www.who.int/europe/news-room/fact-sheets/item/a-healthy-lifestyle---who-recommendations#:~:text=BMI%2C%20formerly%20called%20the%20Quetelet,have%20a%20BMI%20of%2022.9.)
+- [B/W 35.0–39.9 : Obesity class II](https://www.who.int/europe/news-room/fact-sheets/item/a-healthy-lifestyle---who-recommendations#:~:text=BMI%2C%20formerly%20called%20the%20Quetelet,have%20a%20BMI%20of%2022.9.)
+- [Above 40      : Obesity class III](https://www.who.int/europe/news-room/fact-sheets/item/a-healthy-lifestyle---who-recommendations#:~:text=BMI%2C%20formerly%20called%20the%20Quetelet,have%20a%20BMI%20of%2022.9.)
