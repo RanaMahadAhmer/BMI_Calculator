@@ -6,6 +6,19 @@ A Flutter project for calculating BMI (Body Mass Index Ratio).
 
 This app provides a streamlined and modern UI and UX for calculating BMI.
 
+## GUI
+
+The UI is permanent dark with a flare of shade or red.
+
+### Main Screen
+
+![bmi screen](https://github.com/RanaMahadAhmer/BMI_Calculator/assets/108465680/04ec31a5-b455-4391-8610-04b32f076e2c)
+
+### Result Screen
+
+![result screen](https://github.com/RanaMahadAhmer/BMI_Calculator/assets/108465680/756813f6-f97d-4bde-9df4-54c637457c99)
+
+
 ## Formula
 
 The app uses the formula set by the World Health Organization (WHO):
