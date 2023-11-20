@@ -2,9 +2,9 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 
-import '../../constants.dart';
-import '../decorations/decorations.dart';
-import 'methods.dart';
+import '../../other/constants.dart';
+import '../../other/decorations.dart';
+import '../../other/methods.dart';
 
 class WeightAgeRow extends StatefulWidget {
   const WeightAgeRow({super.key});
@@ -14,7 +14,33 @@ class WeightAgeRow extends StatefulWidget {
 }
 
 class _WeightAgeRowState extends State<WeightAgeRow> {
-  Timer? timer;
+  Timer? _timer;
+
+  Widget _createLButton({required IconData icon, required VoidCallback fun}) {
+    return createButton(
+      icon: icon,
+      height: 40,
+      width: 60,
+      radius: 15,
+      pad: 10,
+      onTap: fun,
+      onPress: () {
+        _timer = Timer.periodic(
+          const Duration(milliseconds: 60),
+          (timer) {
+            setState(() {
+              fun();
+            });
+          },
+        );
+      },
+      onEnd: (_) => setState(
+        () {
+          _timer?.cancel();
+        },
+      ),
+    );
+  }
 
   Widget _createValuedCard(
       {required String text,
@@ -22,8 +48,7 @@ class _WeightAgeRowState extends State<WeightAgeRow> {
       required VoidCallback addFun,
       required VoidCallback subFun}) {
     return Container(
-      width: MediaQuery.of(context).size.width * 0.43,
-      decoration: decorateContainer(color: Colors.white12, radius: 20),
+      decoration: decorateContainer(),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -38,50 +63,8 @@ class _WeightAgeRowState extends State<WeightAgeRow> {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              createButton(
-                icon: Icons.remove,
-                height: 50,
-                width: 60,
-                radius: 20,
-                pad: 10,
-                onTap: subFun,
-                onPress: () {
-                  timer = Timer.periodic(
-                    const Duration(milliseconds: 60),
-                    (timer) {
-                      setState(() {
-                        subFun();
-                      });
-                    },
-                  );
-                },
-                onEnd: (_) => setState(
-                  () {
-                    timer?.cancel();
-                  },
-                ),
-              ),
-              createButton(
-                icon: Icons.add,
-                height: 50,
-                width: 60,
-                radius: 20,
-                pad: 10,
-                onTap: addFun,
-                onPress: () {
-                  timer =
-                      Timer.periodic(const Duration(milliseconds: 60), (timer) {
-                    setState(() {
-                      addFun();
-                    });
-                  });
-                },
-                onEnd: (_) => setState(
-                  () {
-                    timer?.cancel();
-                  },
-                ),
-              ),
+              _createLButton(icon: Icons.remove, fun: subFun),
+              _createLButton(icon: Icons.add, fun: addFun),
             ],
           )
         ],
@@ -91,42 +74,52 @@ class _WeightAgeRowState extends State<WeightAgeRow> {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: MediaQuery.of(context).size.width * 0.9,
-      height: MediaQuery.of(context).size.height * 0.25,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          _createValuedCard(
+    return Row(
+      children: [
+        Expanded(
+          flex: 15,
+          child: _createValuedCard(
             text: 'Weight (kg)',
-            value: weight.toInt(),
+            value: DefaultParamValues.weight.toInt(),
             addFun: () {
               setState(() {
-                (weight < 140) ? ++weight : weight;
+                (DefaultParamValues.weight < Limits.weightMaxLimit)
+                    ? ++DefaultParamValues.weight
+                    : DefaultParamValues.weight;
               });
             },
             subFun: () {
               setState(() {
-                (weight > 1) ? --weight : weight;
+                (DefaultParamValues.weight > Limits.heightMinLimit)
+                    ? --DefaultParamValues.weight
+                    : DefaultParamValues.weight;
               });
             },
           ),
-          _createValuedCard(
+        ),
+        const Expanded(child: Text('')),
+        Expanded(
+          flex: 15,
+          child: _createValuedCard(
             text: 'Age',
-            value: age,
+            value: DefaultParamValues.age,
             addFun: () {
               setState(() {
-                (age < 140) ? ++age : age;
+                (DefaultParamValues.age < Limits.ageMaxLimit)
+                    ? ++DefaultParamValues.age
+                    : DefaultParamValues.age;
               });
             },
             subFun: () {
               setState(() {
-                (age > 1) ? --age : age;
+                (DefaultParamValues.age > Limits.ageMinLimit)
+                    ? --DefaultParamValues.age
+                    : DefaultParamValues.age;
               });
             },
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }

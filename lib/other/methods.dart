@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../../constants.dart';
-import '../decorations/decorations.dart';
+import 'constants.dart';
+import 'decorations.dart';
 
 (double, String, String?) calculateBmi(
     {required double height, required double weight}) {

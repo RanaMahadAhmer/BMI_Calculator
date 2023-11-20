@@ -1,6 +1,9 @@
+import 'package:bmi/screens/resultScreen.dart';
 import 'package:flutter/material.dart';
 
-import 'bmiComponents/calculateButton.dart';
+import '../other/constants.dart';
+import '../other/mainButton.dart';
+import '../other/methods.dart';
 import 'bmiComponents/genderCardRow.dart';
 import 'bmiComponents/heightSlider.dart';
 import 'bmiComponents/weight&AgeRow.dart';
@@ -13,8 +16,8 @@ class BmiScreen extends StatefulWidget {
 }
 
 class _BmiScreenState extends State<BmiScreen> {
-  Widget insertTopPadding(double num) {
-    return SizedBox(height: num);
+  Widget _addPadding({required Widget wid}) {
+    return Padding(padding: const EdgeInsets.all(8), child: wid);
   }
 
   @override
@@ -27,21 +30,35 @@ class _BmiScreenState extends State<BmiScreen> {
           style: TextStyle(fontSize: 38),
         ),
       ),
-      body: Padding(
-        padding: EdgeInsets.symmetric(
-            horizontal: MediaQuery.of(context).size.width * .05),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
+      body: _addPadding(
+        wid: Column(
           children: [
-            insertTopPadding(MediaQuery.of(context).size.height * 0.02),
-            const GenderCardRow(),
-            insertTopPadding(MediaQuery.of(context).size.height * 0.02),
-            const HeightSlider(),
-            insertTopPadding(MediaQuery.of(context).size.height * 0.02),
-            const WeightAgeRow(),
-            insertTopPadding(MediaQuery.of(context).size.height * 0.02),
-            const CalculateButton(),
+            Expanded(flex: 3, child: _addPadding(wid: const GenderCardRow())),
+            Expanded(flex: 3, child: _addPadding(wid: const HeightSlider())),
+            Expanded(flex: 3, child: _addPadding(wid: const WeightAgeRow())),
+            Expanded(
+              child: _addPadding(
+                wid: MainButton(
+                  msg: 'Calculate',
+                  onTap: () {
+                    double bmi;
+                    String result;
+                    String? msg;
+                    (bmi, result, msg) = calculateBmi(
+                        height: DefaultParamValues.height,
+                        weight: DefaultParamValues.weight);
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => ResultScreen(
+                              bmi: bmi.toStringAsFixed(2),
+                              result: result,
+                              msg: msg!)),
+                    );
+                  },
+                ),
+              ),
+            ),
           ],
         ),
       ),

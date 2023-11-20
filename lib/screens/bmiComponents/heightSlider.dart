@@ -2,9 +2,9 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 
-import '../../constants.dart';
-import '../decorations/decorations.dart';
-import 'methods.dart';
+import '../../other/constants.dart';
+import '../../other/decorations.dart';
+import '../../other/methods.dart';
 
 class HeightSlider extends StatefulWidget {
   const HeightSlider({super.key});
@@ -14,35 +14,35 @@ class HeightSlider extends StatefulWidget {
 }
 
 class _HeightSliderState extends State<HeightSlider> {
-  Timer? timer;
+  Timer? _timer;
 
-  createLButton({required IconData icon, required int operand}) {
+  Widget _createLButton({required IconData icon, required int operand}) {
     return createButton(
       icon: icon,
-      height: 50,
+      height: 45,
       width: 80,
       radius: 15,
       pad: 20,
       onTap: () {
         setState(
           () {
-            height = height + operand;
+            DefaultParamValues.height = DefaultParamValues.height + operand;
           },
         );
       },
       onPress: () {
-        timer = Timer.periodic(
+        _timer = Timer.periodic(
           const Duration(milliseconds: 60),
           (timer) {
             setState(() {
-              height = height + operand;
+              DefaultParamValues.height = DefaultParamValues.height + operand;
             });
           },
         );
       },
       onEnd: (_) => setState(
         () {
-          timer?.cancel();
+          _timer?.cancel();
         },
       ),
     );
@@ -51,12 +51,9 @@ class _HeightSliderState extends State<HeightSlider> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: MediaQuery.of(context).size.width * 0.9,
-      height: MediaQuery.of(context).size.height * 0.25,
-      decoration: decorateContainer(color: Colors.white12, radius: 10),
+      decoration: decorateContainer(),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           const Text(
             "Height",
@@ -64,27 +61,27 @@ class _HeightSliderState extends State<HeightSlider> {
           ),
           Slider(
             allowedInteraction: SliderInteraction.slideOnly,
-            activeColor: const Color.fromRGBO(255, 0, 0, 100),
-            thumbColor: const Color.fromRGBO(255, 0, 0, 1),
-            value: height.toDouble(),
-            min: 10,
-            max: 300,
-            divisions: 290,
+            activeColor: const Color.fromARGB(150, 93, 206, 196),
+            thumbColor: const Color.fromARGB(255, 74, 175, 163),
+            value: DefaultParamValues.height.toDouble(),
+            min: Limits.heightMinLimit,
+            max: Limits.heightMaxLimit,
+            divisions: Limits.heightDivisions,
             onChanged: (value) {
               setState(() {
-                height = value;
+                DefaultParamValues.height = value;
               });
             },
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              createLButton(icon: Icons.chevron_left, operand: -1),
+              _createLButton(icon: Icons.chevron_left, operand: -1),
               Text(
-                "${height.toInt()} cm",
+                "${DefaultParamValues.height.toInt()} cm",
                 style: const TextStyle(fontSize: 20),
               ),
-              createLButton(icon: Icons.chevron_right, operand: 1),
+              _createLButton(icon: Icons.chevron_right, operand: 1),
             ],
           ),
         ],

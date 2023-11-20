@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../decorations/decorations.dart';
+import '../../other/decorations.dart';
 
 class GenderCardRow extends StatefulWidget {
   const GenderCardRow({super.key});
@@ -23,7 +23,6 @@ class _GenderCardRowState extends State<GenderCardRow> {
         });
       },
       child: Container(
-        width: MediaQuery.of(context).size.width * 0.43,
         decoration: decorateContainer(color: color, radius: 20),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -44,24 +43,27 @@ class _GenderCardRowState extends State<GenderCardRow> {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: MediaQuery.of(context).size.height * 0.2,
-      width: MediaQuery.of(context).size.width * 0.9,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          _createGenderCards(
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Expanded(
+          flex: 15,
+          child: _createGenderCards(
               icon: Icons.male,
               text: 'Male',
               color: maleCardColor,
               selectMale: true),
-          _createGenderCards(
+        ),
+        const Expanded(child: Text('')),
+        Expanded(
+          flex: 15,
+          child: _createGenderCards(
               icon: Icons.female,
               text: 'Female',
               color: femaleCardColor,
               selectMale: false),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }

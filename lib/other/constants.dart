@@ -8,6 +8,18 @@ Map<String, String> msg = {
       'Change your life style. Follow strict diet and exercise daily.'
 };
 
-double weight = 55;
-int age = 18;
-double height = 150;
+class DefaultParamValues {
+  static double weight = 55;
+  static int age = 18;
+  static double height = 150;
+}
+
+class Limits {
+  static int ageMinLimit = 1;
+  static int ageMaxLimit = 150;
+  static int weightMinLimit = 1;
+  static int weightMaxLimit = 600;
+  static double heightMinLimit = 10;
+  static double heightMaxLimit = 350;
+  static int heightDivisions = 340;
+}

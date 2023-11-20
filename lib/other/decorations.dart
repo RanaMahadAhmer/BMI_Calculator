@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+const Color primaryCardColor = Colors.white12;
+const double primaryCardRadius = 20;
+
 Color maleCardColor = Colors.white38;
 Color femaleCardColor = Colors.white12;
 bool maleSelected = true;
@@ -14,7 +17,8 @@ changeGenderCardColor() {
   }
 }
 
-decorateContainer({required Color color, required double radius}) {
+decorateContainer(
+    {Color color = primaryCardColor, double radius = primaryCardRadius}) {
   return BoxDecoration(
     color: color,
     border: Border.all(width: 0),
