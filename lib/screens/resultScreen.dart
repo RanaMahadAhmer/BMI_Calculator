@@ -45,10 +45,10 @@ class _ResultScreenState extends State<ResultScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        toolbarHeight: isPortraitMode(context) ? 25 : null,
+        toolbarHeight: isPortraitMode(context) ? null : 25,
         title: Text(
           "Result",
-          style: TextStyle(fontSize: isPortraitMode(context) ? 24 : 50),
+          style: TextStyle(fontSize: isPortraitMode(context) ? 50 : 24),
         ),
       ),
       body: _addPadding(
