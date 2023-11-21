@@ -48,3 +48,12 @@ Widget createButton(
     ),
   );
 }
+
+Widget addPadding({required Widget wid}) {
+  return Padding(padding: const EdgeInsets.all(8), child: wid);
+}
+
+isPortraitMode(BuildContext context) {
+  return (MediaQuery.of(context).size.height >
+      MediaQuery.of(context).size.width);
+}

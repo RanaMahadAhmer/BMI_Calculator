@@ -72,29 +72,48 @@ class _WeightAgeRowState extends State<WeightAgeRow> {
     );
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return Row(
+  _incrementWeight() {
+    setState(() {
+      (DefaultParamValues.weight < Limits.weightMaxLimit)
+          ? ++DefaultParamValues.weight
+          : DefaultParamValues.weight;
+    });
+  }
+
+  _decrementWeight() {
+    setState(() {
+      (DefaultParamValues.weight > Limits.heightMinLimit)
+          ? --DefaultParamValues.weight
+          : DefaultParamValues.weight;
+    });
+  }
+
+  _incrementAge() {
+    setState(() {
+      (DefaultParamValues.age < Limits.ageMaxLimit)
+          ? ++DefaultParamValues.age
+          : DefaultParamValues.age;
+    });
+  }
+
+  _decrementAge() {
+    setState(() {
+      (DefaultParamValues.age > Limits.ageMinLimit)
+          ? --DefaultParamValues.age
+          : DefaultParamValues.age;
+    });
+  }
+
+  _landscapeBuild() {
+    return Column(
       children: [
         Expanded(
           flex: 15,
           child: _createValuedCard(
             text: 'Weight (kg)',
             value: DefaultParamValues.weight.toInt(),
-            addFun: () {
-              setState(() {
-                (DefaultParamValues.weight < Limits.weightMaxLimit)
-                    ? ++DefaultParamValues.weight
-                    : DefaultParamValues.weight;
-              });
-            },
-            subFun: () {
-              setState(() {
-                (DefaultParamValues.weight > Limits.heightMinLimit)
-                    ? --DefaultParamValues.weight
-                    : DefaultParamValues.weight;
-              });
-            },
+            addFun: _incrementWeight,
+            subFun: _decrementWeight,
           ),
         ),
         const Expanded(child: Text('')),
@@ -103,23 +122,40 @@ class _WeightAgeRowState extends State<WeightAgeRow> {
           child: _createValuedCard(
             text: 'Age',
             value: DefaultParamValues.age,
-            addFun: () {
-              setState(() {
-                (DefaultParamValues.age < Limits.ageMaxLimit)
-                    ? ++DefaultParamValues.age
-                    : DefaultParamValues.age;
-              });
-            },
-            subFun: () {
-              setState(() {
-                (DefaultParamValues.age > Limits.ageMinLimit)
-                    ? --DefaultParamValues.age
-                    : DefaultParamValues.age;
-              });
-            },
+            addFun: _incrementAge,
+            subFun: _decrementAge,
           ),
         ),
       ],
     );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return isPortraitMode(context)
+        ? Row(
+            children: [
+              Expanded(
+                flex: 15,
+                child: _createValuedCard(
+                  text: 'Weight (kg)',
+                  value: DefaultParamValues.weight.toInt(),
+                  addFun: _incrementWeight,
+                  subFun: _decrementWeight,
+                ),
+              ),
+              const Expanded(child: Text('')),
+              Expanded(
+                flex: 15,
+                child: _createValuedCard(
+                  text: 'Age',
+                  value: DefaultParamValues.age,
+                  addFun: _incrementAge,
+                  subFun: _decrementAge,
+                ),
+              ),
+            ],
+          )
+        : _landscapeBuild();
   }
 }

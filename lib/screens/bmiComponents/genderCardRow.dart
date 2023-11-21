@@ -1,3 +1,4 @@
+import 'package:bmi/other/methods.dart';
 import 'package:flutter/material.dart';
 
 import '../../other/decorations.dart';
@@ -41,10 +42,9 @@ class _GenderCardRowState extends State<GenderCardRow> {
     );
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  Widget _landscapeBuild() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         Expanded(
           flex: 15,
@@ -65,5 +65,33 @@ class _GenderCardRowState extends State<GenderCardRow> {
         ),
       ],
     );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return isPortraitMode(context)
+        ? Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Expanded(
+                flex: 15,
+                child: _createGenderCards(
+                    icon: Icons.male,
+                    text: 'Male',
+                    color: maleCardColor,
+                    selectMale: true),
+              ),
+              const Expanded(child: Text('')),
+              Expanded(
+                flex: 15,
+                child: _createGenderCards(
+                    icon: Icons.female,
+                    text: 'Female',
+                    color: femaleCardColor,
+                    selectMale: false),
+              ),
+            ],
+          )
+        : _landscapeBuild();
   }
 }
