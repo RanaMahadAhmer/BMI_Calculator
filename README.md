@@ -12,7 +12,7 @@ The UI is permanent dark with a flare of shade or red.
 
 ### Main Screen
 
-#### Potrait Mode
+#### Portrait Mode
 
 ![bmi screen](https://github.com/RanaMahadAhmer/BMI_Calculator/assets/108465680/04ec31a5-b455-4391-8610-04b32f076e2c)
 
@@ -22,7 +22,7 @@ The UI is permanent dark with a flare of shade or red.
 
 ### Result Screen
 
-#### Potrait Mode
+#### Portrait Mode
 
 ![result screen](https://github.com/RanaMahadAhmer/BMI_Calculator/assets/108465680/756813f6-f97d-4bde-9df4-54c637457c99)
 
