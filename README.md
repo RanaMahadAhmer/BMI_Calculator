@@ -12,12 +12,23 @@ The UI is permanent dark with a flare of shade or red.
 
 ### Main Screen
 
+#### Potrait Mode
+
 ![bmi screen](https://github.com/RanaMahadAhmer/BMI_Calculator/assets/108465680/04ec31a5-b455-4391-8610-04b32f076e2c)
+
+#### Landscape Mode
+
+![Screenshot_20240221_092631](https://github.com/RanaMahadAhmer/BMI_Calculator/assets/108465680/d2792ed2-da1e-41ec-8c2c-e2b7854d501c)
 
 ### Result Screen
 
+#### Potrait Mode
+
 ![result screen](https://github.com/RanaMahadAhmer/BMI_Calculator/assets/108465680/756813f6-f97d-4bde-9df4-54c637457c99)
 
+#### Landscape Mode
+
+![Screenshot_20240221_092650](https://github.com/RanaMahadAhmer/BMI_Calculator/assets/108465680/32a607c0-1326-49a9-a5d2-8d46fd7fee66)
 
 ## Formula
 
